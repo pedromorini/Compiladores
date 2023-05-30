@@ -20,3 +20,4 @@ Será gerada uma pasta target no projeto e o arquivo LA-Lexico-1.0-SNAPSHOT-jar-
 -Execução-
 
 No prompt de comando utilize o comando java -jar Caminho/Ate/O/Arquivo/Compilado/LA-Lexico-1.0-SNAPSHOT-jar-with-dependencies.jat entrada.txt saida.txt
+para executar o programa.
