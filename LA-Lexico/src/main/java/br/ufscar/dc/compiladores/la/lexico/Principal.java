@@ -45,7 +45,7 @@ public class Principal {
                     // Se houver um simbolodesconhecido o analisador imprime esse símbolo e a mensagem de erro correspondente
                     saida.write(("Linha " + t.getLine() + ": " + t.getText() + " - simbolo nao identificado\n").getBytes());
                     saida.close();
-                
+
                 }else if(verificaToken.equals("COMENTARIO_ERRADO")){
                     
                     // Mensagem no caso do comentario nao ser fechado

@@ -19,6 +19,8 @@ import java.util.logging.Logger;
 public class LAErrorListener implements ANTLRErrorListener {
     
     FileOutputStream saida;
+    
+    // Variavel lógica para validar apenas um erro
     Boolean erro = false;
     
     public LAErrorListener(FileOutputStream saida) {
@@ -51,6 +53,7 @@ public class LAErrorListener implements ANTLRErrorListener {
             token = "EOF";
         }
 
+        // Se ainda não houver ocorrido nenhum erro sintático ele o escreve
         if (!erro){
             try {
                 saida.write(("Linha "+line+": erro sintatico proximo a "+token+"\n").getBytes());

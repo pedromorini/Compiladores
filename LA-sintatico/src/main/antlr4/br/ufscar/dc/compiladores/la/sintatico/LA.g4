@@ -69,7 +69,7 @@ SIMBOLOS: '&' | '^' | ',' | '.' | '..';
 SIMBOLOS_DESCONHECIDOS: .;
 
 
-// Sintático
+// Regras sintáticas - baseadas na gramática LA disponibilizada
 
 programa: declaracoes 'algoritmo' corpo 'fim_algoritmo';
 
