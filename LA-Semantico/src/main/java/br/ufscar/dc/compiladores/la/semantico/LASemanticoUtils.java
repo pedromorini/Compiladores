@@ -14,8 +14,11 @@ import org.antlr.v4.runtime.Token;
  * @author Pedro
  */
 public class LASemanticoUtils {
+    
+    // Cria a ista para armazenar os erros semânticos
     public static List<String> errosSemanticos = new ArrayList<>();
     
+    // Função para adicionar erros na lista
     public static void adicionarErroSemantico(Token t, String mensagem){
         int linha = t.getLine();
         //int coluna = t.getCharPositionInLine();
@@ -30,7 +33,7 @@ public class LASemanticoUtils {
                 ret = aux;
             }else if(ret != aux && aux != TabelaDeSimbolos.TipoLA.Invalido){
                 adicionarErroSemantico(ctx.start, "Expressao "+ctx.getText()+" contem tipos incompativeis");
-                //return TabelaDeSimbolos.TipoLA.Invalido;
+                //retorna o tipo da expressão
                 return aux;
             }
         }
@@ -44,19 +47,21 @@ public class LASemanticoUtils {
             if(ret == null){
                 ret = aux;
             }else if(ret != aux && aux != TabelaDeSimbolos.TipoLA.Invalido){
-                //return TabelaDeSimbolos.TipoLA.Invalido;
+                //retorna o tipo do termo lógico
                 return aux;
             }
         }
         return ret;    
     }
-
+    
+    // retorna o tipo do fator lógico
     public static TabelaDeSimbolos.TipoLA verficarTipo(TabelaDeSimbolos tabela, LAParser.Fator_logicoContext ctx) {
         return verificarTipo(tabela, ctx.parcela_logica());    
     }
 
     public static TabelaDeSimbolos.TipoLA verificarTipo(TabelaDeSimbolos tabela, LAParser.Parcela_logicaContext ctx) {
         if(ctx.exp_relacional() != null){
+            // retorna o tipo da parcela lógica
             return verificarTipo(tabela, ctx.exp_relacional());
         }else{
             return TabelaDeSimbolos.TipoLA.Logico;
@@ -70,7 +75,7 @@ public class LASemanticoUtils {
             if(ret == null){
                 ret = aux;
             }else if(ret != aux && aux != TabelaDeSimbolos.TipoLA.Invalido){
-                //return TabelaDeSimbolos.TipoLA.Invalido;
+                //retorna o tipo da expressão relacional
                 return aux;
             }else{
                 return TabelaDeSimbolos.TipoLA.Logico;
@@ -86,7 +91,7 @@ public class LASemanticoUtils {
             if(ret == null){
                 ret = aux;
             }else if(ret != aux && aux != TabelaDeSimbolos.TipoLA.Invalido){
-                //return TabelaDeSimbolos.TipoLA.Invalido;
+                //retorna o tipo da expressão aritmetica
                 return aux;
             }
         }
@@ -100,7 +105,7 @@ public class LASemanticoUtils {
             if(ret == null){
                 ret = aux;
             }else if(ret != aux && aux != TabelaDeSimbolos.TipoLA.Invalido){
-                //return TabelaDeSimbolos.TipoLA.Invalido;
+                //retorna o tipo to termo
                 return aux;
             }
         }
@@ -114,13 +119,14 @@ public class LASemanticoUtils {
             if(ret == null){
                 ret = aux;
             }else if(ret != aux && aux != TabelaDeSimbolos.TipoLA.Invalido){
-                //return TabelaDeSimbolos.TipoLA.Invalido;
+                //retorna o tipo do fator
                 return aux;
             }
         }
         return ret;    
     }
-
+    
+    // retorna o tipo da parcela 
     public static TabelaDeSimbolos.TipoLA verficarTipo(TabelaDeSimbolos tabela, LAParser.ParcelaContext ctx) {
         if(ctx.parcela_unario() != null){
             return verificarTipo(tabela, ctx.parcela_unario());
@@ -130,16 +136,24 @@ public class LASemanticoUtils {
     }
 
     public static TabelaDeSimbolos.TipoLA verificarTipo(TabelaDeSimbolos tabela, LAParser.Parcela_unarioContext ctx) {
+        // Verifica se a parcela é inteira
         if(ctx.NUM_INT() != null){
             return TabelaDeSimbolos.TipoLA.Inteiro;
+        
+        // Verifica se a parcela é real
         }else if(ctx.NUM_REAL() != null){
             return TabelaDeSimbolos.TipoLA.Real;
+            
+        // Verifica se a parcela é um literal
         }else if(ctx.IDENT() != null){
             return TabelaDeSimbolos.TipoLA.Literal;
+            
+        // Verifica se é uma variável
         }else if(ctx.identificador() != null){
             String nomeVar = ctx.identificador().getText();
             
             if(tabela.existe(nomeVar)){
+                // retorna o tipo da variável se ea existe
                 return tabela.verificar(nomeVar);
             }else{
                 TabelaDeSimbolos aux = escoposAninhados.percorrerEscopoAninhados().get(LASemantico.escoposAninhados.percorrerEscopoAninhados().size() - 1);
@@ -147,6 +161,7 @@ public class LASemanticoUtils {
                     adicionarErroSemantico(ctx.start, "identificador "+ctx.getText()+" nao declarado");
                     return TabelaDeSimbolos.TipoLA.Invalido;
                 }else{
+                    // Retorna a verificação do tipo da variável em outro escopo
                     return aux.verificar(nomeVar);
                 }
             }
@@ -156,10 +171,15 @@ public class LASemanticoUtils {
     }
 
     public static TabelaDeSimbolos.TipoLA verificarTipo(TabelaDeSimbolos tabela, LAParser.Parcela_nao_unarioContext ctx) {
+        
+        // Verifica se a variaivel é literal
         if(ctx.CADEIA() != null){
             return TabelaDeSimbolos.TipoLA.Literal;
         }else{
+            // Verifica se a variavel existe
             if(tabela.existe(ctx.identificador().getText())){
+                
+                // Verifica o tipo da variável
                 return tabela.verificar(ctx.identificador().getText());
             }else{
                 adicionarErroSemantico(ctx.start, "identificador "+ctx.getText()+" nao declarado");
@@ -168,6 +188,7 @@ public class LASemanticoUtils {
         }
     }
 
+    // Verifica o tipo da variável na tabela
     public static TabelaDeSimbolos.TipoLA verificarTipo(TabelaDeSimbolos tabela, String nomeVar){
         return tabela.verificar(nomeVar);
     }

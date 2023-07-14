@@ -86,11 +86,14 @@ public class Principal {
             // Adiciona o listener criado em LAErrorListener
             parser.addErrorListener(mcel);
 
-
+            // Verifica possiveis erros semânticos
             LASemantico lasem = new LASemantico();
             lasem.visitPrograma(parser.programa());
+            
+            // Cria uma lista contendo os erros semanticos
             List<String> ErrosSemanticos = LASemanticoUtils.errosSemanticos;
             
+            // Itera sobre a lista exibindos erros semanticos
             for(var es: ErrosSemanticos){
                 saida.write((es + "\n").getBytes());
             }
