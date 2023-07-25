@@ -19,6 +19,7 @@ br\ufscar\dc\compiladores\la\semantico\LAParser$Item_selecaoContext.class
 br\ufscar\dc\compiladores\la\semantico\LAParser$ProgramaContext.class
 br\ufscar\dc\compiladores\la\semantico\LAParser$ParametrosContext.class
 br\ufscar\dc\compiladores\la\semantico\LAParser$Termo_logicoContext.class
+br\ufscar\dc\compiladores\la\semantico\LAGeradorC$1.class
 br\ufscar\dc\compiladores\la\semantico\LAParser$Valor_constanteContext.class
 br\ufscar\dc\compiladores\la\semantico\LAParser$Tipo_estendidoContext.class
 br\ufscar\dc\compiladores\la\semantico\LAParser.class
@@ -40,6 +41,7 @@ br\ufscar\dc\compiladores\la\semantico\TabelaDeSimbolos$TipoLA.class
 br\ufscar\dc\compiladores\la\semantico\LAParser$CmdcasoContext.class
 br\ufscar\dc\compiladores\la\semantico\TabelaDeSimbolos.class
 br\ufscar\dc\compiladores\la\semantico\LAParser$Op_unarioContext.class
+br\ufscar\dc\compiladores\la\semantico\LAGeradorC.class
 br\ufscar\dc\compiladores\la\semantico\LABaseListener.class
 br\ufscar\dc\compiladores\la\semantico\LAParser$Fator_logicoContext.class
 br\ufscar\dc\compiladores\la\semantico\LAParser$Tipo_basicoContext.class

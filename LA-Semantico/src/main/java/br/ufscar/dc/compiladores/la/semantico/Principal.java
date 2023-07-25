@@ -1,7 +1,10 @@
 package br.ufscar.dc.compiladores.la.semantico;
 
+import br.ufscar.dc.compiladores.la.semantico.LAParser.ProgramaContext;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import org.antlr.v4.runtime.CharStream;
 import org.antlr.v4.runtime.CharStreams;
@@ -27,7 +30,7 @@ public class Principal {
         Boolean erroLexico = false;
 
         Token t = null;
-
+        
         while((t=lexer.nextToken()).getType() != Token.EOF){
 
             // String para verificar a qual regra o token pertence
@@ -49,26 +52,27 @@ public class Principal {
             }else if(verificaToken.equals("SIMBOLOS_DESCONHECIDOS")){
 
                 // Se houver um simbolodesconhecido o analisador imprime esse símbolo e a mensagem de erro correspondente
-                saida.write(("Linha " + t.getLine() + ": " + t.getText() + " - simbolo nao identificado\n").getBytes());
-                saida.close();
+                saida.write(("Linha " + t.getLine() + ": " + t.getText() + " - simbolo nao identificado\n").getBytes()); 
+                erroLexico = true;
 
             }else if(verificaToken.equals("COMENTARIO_ERRADO")){
 
                 // Mensagem no caso do comentario nao ser fechado
                 saida.write(("Linha " + t.getLine() + ": " + "comentario nao fechado\n").getBytes());
-                saida.close();
+                erroLexico = true;
 
             }else if(verificaToken.equals("CADEIA_ERRADA")){
 
                 // Mensagem no caso da cadeia não ser fechada
-                saida.write(("Linha " + t.getLine() + ": cadeia literal nao fechada\n").getBytes());
-                saida.close();
+                saida.write(("Linha " + t.getLine() + ": cadeia literal nao fechada\n").getBytes()); 
+                erroLexico = true;
+                
             }
         }
 
-        // Se o erro não for léxico
+        // Se não houver erro léxico
         if(!erroLexico){
-
+   
             // aponta o leitor para o nicio do arquivo
             cs.seek(0);
 
@@ -85,22 +89,34 @@ public class Principal {
 
             // Adiciona o listener criado em LAErrorListener
             parser.addErrorListener(mcel);
-
+            
             // Verifica possiveis erros semânticos
+            ProgramaContext arvore = parser.programa();
             LASemantico lasem = new LASemantico();
-            lasem.visitPrograma(parser.programa());
-            
-            // Cria uma lista contendo os erros semanticos
-            List<String> ErrosSemanticos = LASemanticoUtils.errosSemanticos;
-            
-            // Itera sobre a lista exibindos erros semanticos
-            for(var es: ErrosSemanticos){
-                saida.write((es + "\n").getBytes());
+            lasem.visitPrograma(arvore);
+
+            if(LASemanticoUtils.errosSemanticos.isEmpty()){
+
+                LAGeradorC gera = new LAGeradorC();
+                gera.visitPrograma(arvore);
+                try(PrintWriter pw = new PrintWriter(args[1])){
+                    pw.print(gera.saida.toString());
+                }
+
+            }else{
+
+                // Cria uma lista contendo os erros semanticos
+                List<String> ErrosSemanticos = LASemanticoUtils.errosSemanticos;
+
+                // Itera sobre a lista exibindos erros semanticos
+                for(var es: ErrosSemanticos){
+                    saida.write((es + "\n").getBytes());
+                }
+                saida.write(("Fim da compilacao\n").getBytes());
             }
+            
         }
-
-        saida.write(("Fim da compilacao\n").getBytes());
+          
         saida.close();
-
     }
 }

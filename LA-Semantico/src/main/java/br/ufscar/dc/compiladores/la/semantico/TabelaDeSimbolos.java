@@ -19,7 +19,6 @@ public class TabelaDeSimbolos {
         Literal,
         Procedimento,
         Registro,
-        Ponteiro,
         Invalido
     }
     
@@ -40,14 +39,44 @@ public class TabelaDeSimbolos {
     }
     
     public void adicionar(String nome, TipoLA tipo){
+        
+        nome = reduzNome(nome, "[");
+        
         tabela.put(nome, new EntradaTabelaDeSimbolos(nome, tipo));
     }
     
     public boolean existe(String nome){
+        nome = reduzNome(nome, "[");
         return tabela.containsKey(nome);
     }
     
     public TipoLA verificar(String nome){
+        nome = reduzNome(nome, "[");
         return tabela.get(nome).tipo;
     }
+    
+    // Método para reduzir nome de variaveis que tenham []
+    public static String reduzNome(String nome, String simbolo) {
+        
+        if (nome.contains(simbolo)) {
+
+            boolean continua = true;
+            int cont = 0;
+            String nomeAux;
+
+            while (continua) {
+                nomeAux = nome.substring(cont);
+
+                if (nomeAux.startsWith(simbolo))
+                    continua = false;
+                else
+                    cont++;
+            }
+
+            nome = nome.substring(0, cont); 
+        }
+        
+        return nome;
+    }   
+    
 }

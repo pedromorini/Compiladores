@@ -36,6 +36,7 @@ br\ufscar\dc\compiladores\la\sintatico\LAParser$ConstantesContext.class
 br\ufscar\dc\compiladores\la\sintatico\LAParser$Item_selecaoContext.class
 br\ufscar\dc\compiladores\la\sintatico\LABaseListener.class
 br\ufscar\dc\compiladores\la\sintatico\LAParser$Parcela_unarioContext.class
+br\ufscar\dc\compiladores\la\sintatico\LAErrorListener.class
 br\ufscar\dc\compiladores\la\sintatico\LAParser$Numero_intervaloContext.class
 br\ufscar\dc\compiladores\la\sintatico\LAParser$Tipo_basico_identContext.class
 br\ufscar\dc\compiladores\la\sintatico\LAParser$DeclaracoesContext.class

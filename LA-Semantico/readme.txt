@@ -1,4 +1,4 @@
-#Analisador Semantico desenvolvido para a linguegem LA
+#Analisador Semantico e Gerador de código desenvolvido para a linguegem LA
 
 *Pedro Morini da Mota - 795414
 

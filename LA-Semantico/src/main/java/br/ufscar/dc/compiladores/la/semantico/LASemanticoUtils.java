@@ -5,6 +5,7 @@
 package br.ufscar.dc.compiladores.la.semantico;
 
 import static br.ufscar.dc.compiladores.la.semantico.LASemantico.escoposAninhados;
+import static br.ufscar.dc.compiladores.la.semantico.LASemantico.tabelaFunPro;
 import java.util.ArrayList;
 import java.util.List;
 import org.antlr.v4.runtime.Token;
@@ -144,20 +145,44 @@ public class LASemanticoUtils {
         }else if(ctx.NUM_REAL() != null){
             return TabelaDeSimbolos.TipoLA.Real;
             
-        // Verifica se a parcela é um literal
+        // Verifica se a parcela é uma função ou procedimento
         }else if(ctx.IDENT() != null){
-            return TabelaDeSimbolos.TipoLA.Literal;
-            
+            if(tabelaFunPro.containsKey(ctx.IDENT().getText())){
+                List<TabelaDeSimbolos.TipoLA> aux = tabelaFunPro.get(ctx.IDENT().getText());
+                
+                if(aux.size()-1 == ctx.expressao().size()){
+                    for(int i = 0; i < ctx.expressao().size(); i++){
+                        if(aux.get(i) != verificarTipo(tabela, ctx.expressao().get(i))){
+                            // Erro no caso dos paramentros não serem do mesmo tipo do método
+                            adicionarErroSemantico(ctx.expressao().get(i).getStart(), "incompatibilidade de parametros na chamada de " + ctx.IDENT().getText());
+                        }
+                    }
+                    
+                    return aux.get(aux.size() - 1);
+                }else{
+                    // Erro no caso dos paramentros não serem do mesmo tipo do método
+                    adicionarErroSemantico(ctx.IDENT().getSymbol(), "incompatibilidade de parametros na chamada de " + ctx.IDENT().getText());
+                }
+            }else{
+                return TabelaDeSimbolos.TipoLA.Invalido;
+            }            
         // Verifica se é uma variável
         }else if(ctx.identificador() != null){
-            String nomeVar = ctx.identificador().getText();
+            String nomeVar;
+            
+            // Verifica se a dimensão esta vazia e pega o nome da variavel
+            if(!ctx.identificador().dimensao().exp_aritmetica().isEmpty()){
+                nomeVar = ctx.identificador().IDENT().get(0).getText();
+            }else{
+                nomeVar = ctx.identificador().getText();
+            }       
             
             if(tabela.existe(nomeVar)){
-                // retorna o tipo da variável se ea existe
+                // retorna o tipo da variável se ela existe
                 return tabela.verificar(nomeVar);
             }else{
                 TabelaDeSimbolos aux = escoposAninhados.percorrerEscopoAninhados().get(LASemantico.escoposAninhados.percorrerEscopoAninhados().size() - 1);
-                if(!tabela.existe(nomeVar)){
+                if(!aux.existe(nomeVar)){
                     adicionarErroSemantico(ctx.start, "identificador "+ctx.getText()+" nao declarado");
                     return TabelaDeSimbolos.TipoLA.Invalido;
                 }else{
@@ -165,9 +190,9 @@ public class LASemanticoUtils {
                     return aux.verificar(nomeVar);
                 }
             }
-        }else{
-            return verificarTipo(tabela, ctx.expressao(0));
         }
+        
+        return verificarTipo(tabela, ctx.expressao(0));
     }
 
     public static TabelaDeSimbolos.TipoLA verificarTipo(TabelaDeSimbolos tabela, LAParser.Parcela_nao_unarioContext ctx) {

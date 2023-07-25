@@ -53,10 +53,10 @@ COL: '[' | ']';
 IDENT: ('a'..'z' | 'A'..'Z' | '_')('a'..'z'| 'A'..'Z' | '0'..'9' | '_')*;
 
 // Cadeia de qualquer coisas entre aspas - até aspas
-CADEIA: '"' ( ESC_SEQ | ~('"' | '\\' | '\n'))* '"';
+CADEIA: '"' ( ESC_SEQ | ~('"' | '\n'))* '"';
 
 // Quando não ocorre o fechamento da cadeia
-CADEIA_ERRADA: '"' ( ESC_SEQ | ~('"' | '\\' | '\n'))* '\n';
+CADEIA_ERRADA: '"' ( ESC_SEQ | ~('"' | '\n'))* '\n';
 
 // Escape para as aspas duplas
 fragment

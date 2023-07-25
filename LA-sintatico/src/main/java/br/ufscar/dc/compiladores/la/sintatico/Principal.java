@@ -49,20 +49,21 @@ public class Principal {
                     
                 // Se houver um simbolodesconhecido o analisador imprime esse símbolo e a mensagem de erro correspondente
                 saida.write(("Linha " + t.getLine() + ": " + t.getText() + " - simbolo nao identificado\n").getBytes());
-                saida.close();
+                erroLexico = true;
 
             }else if(verificaToken.equals("COMENTARIO_ERRADO")){
                     
                 // Mensagem no caso do comentario nao ser fechado
                 saida.write(("Linha " + t.getLine() + ": " + "comentario nao fechado\n").getBytes());
-                saida.close();
+                erroLexico = true;
                     
             }else if(verificaToken.equals("CADEIA_ERRADA")){
                     
                 // Mensagem no caso da cadeia não ser fechada
                 saida.write(("Linha " + t.getLine() + ": cadeia literal nao fechada\n").getBytes());
-                saida.close();      
+                erroLexico = true;  
             }
+            
         }
         
         // Se o erro não for léxico
@@ -84,7 +85,6 @@ public class Principal {
             
             // Adiciona o listener criado em LAErrorListener
             parser.addErrorListener(mcel);
-            
             
             parser.programa();
         }
