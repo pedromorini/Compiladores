@@ -18,7 +18,7 @@ O trabalho desenvolvido a seguir para a matéria de Compiladores visa a criaçã
 
 ## GRAMÁTICA
 
-A gramática da linguagem LCD, está definida no arquivo [LCD.g4](https://github.com/pedromorini/Compiladores/blob/master/LCD/src/main/antlr4/br/ufscar/dc/compiladores/lcheat/LCD.g4)
+A gramática da linguagem LCD, está definida no arquivo [LCD.g4](https://github.com/pedromorini/Compiladores/blob/master/LCD/src/main/antlr4/br/ufscar/dc/compiladores/lcd/LCD.g4)
 
 O seguinte exemplo ilustra o uso da linguagem LCD:
 
