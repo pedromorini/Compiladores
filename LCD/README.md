@@ -18,7 +18,7 @@ O trabalho desenvolvido a seguir para a matéria de Compiladores visa a criaçã
 
 ## GRAMÁTICA
 
-A gramática da linguagem LCD, está definida no arquivo [LCD.g4]()
+A gramática da linguagem LCD, está definida no arquivo [LCD.g4](https://github.com/pedromorini/Compiladores/blob/master/LCD/src/main/antlr4/br/ufscar/dc/compiladores/lcheat/LCD.g4)
 
 O seguinte exemplo ilustra o uso da linguagem LCD:
 
@@ -52,9 +52,9 @@ Os valores do código declarado em cheat representm os botões de um controle:
 
 Para executar o programa, no terminal use o comando:
 
-java -jar PATH/TO/EXEC/recipe-1.0-SNAPSHOT-jar-with-dependencies.jar PATH/TO/FILE/arquivo_entrada.txt PATH/TO/EXIT/arquivo_saida.html
+java -jar Caminho/Do/Compilador/LCD-1.0-SNAPSHOT-jar-with-dependencies Caminho/Da/Entrada/arquivo_entrada.txt Caminho/Da/Saida/arquivo_saida.html
 
-Além disso, alguns casos de testes podem ser usados como exemplo: [casos de teste]()
+Além disso, alguns casos de testes podem ser usados como exemplo: [casos de teste](https://github.com/pedromorini/Compiladores/tree/master/LCD/casos-de-teste)
 
 ## VÍDEO
 Disponível em: [link]()
