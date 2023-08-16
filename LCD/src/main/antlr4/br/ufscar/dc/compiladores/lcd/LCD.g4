@@ -1,5 +1,7 @@
 grammar LCD;
 
+// Regras Léxicas
+
 WS: (' '|'\t'|'\r'|'\n') { skip(); };
 
 PALAVRA_CHAVE:  'nome' | 'capa' | 'console' | 'ps1' | 'ps2' | 'cheat' |
@@ -21,6 +23,8 @@ ESC_SEQ: '\\"';
 SIMBOLOS: '[' | ']' | ',' | ':' | '<-' | '<>';
 
 SIMBOLOS_DESCONHECIDOS: .;
+
+// Regras Sintaticas
 
 programa: info declaracoes EOF;
 
