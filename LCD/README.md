@@ -57,4 +57,4 @@ java -jar Caminho/Do/Compilador/LCD-1.0-SNAPSHOT-jar-with-dependencies Caminho/D
 Além disso, alguns casos de testes podem ser usados como exemplo: [casos de teste](https://github.com/pedromorini/Compiladores/tree/master/LCD/casos-de-teste)
 
 ## VÍDEO
-Disponível em: [link]()
+Disponível em: [link](https://github.com/pedromorini/Compiladores/blob/master/LCD/mqb-kbik-sfc%20(2023-08-16%2009_07%20GMT-3).mp4)
